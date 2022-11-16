@@ -14,6 +14,10 @@ public class GroceryList extends ArrayList {
 
     }
 
+    public GroceryItem getItem() {
+        return null;
+    }
+
 
     public GroceryItem removeItem() {
         return null;
