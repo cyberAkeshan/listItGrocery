@@ -1,7 +1,7 @@
 package com.example.listitgrocery;
 
 public class Recipe { //implements Recipe API
-
+/*
     private String recipeName;
     private GroceryList ingredients;
 
@@ -15,5 +15,5 @@ public class Recipe { //implements Recipe API
 
     public GroceryList getIngredients() {
         return ingredients;
-    }
-}
+ */   }
+
