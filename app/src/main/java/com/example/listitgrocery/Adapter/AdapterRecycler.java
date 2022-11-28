@@ -1,4 +1,4 @@
-package com.example.listitgrocery;
+package com.example.listitgrocery.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +8,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.listitgrocery.Grocery;
+import com.example.listitgrocery.R;
+
 import java.util.ArrayList;
 
 public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHolder> {
-    public AdapterRecycler(ArrayList<Grocery> groceryArrayList){
+    private final RecyclerViewInterface recyclerViewInterface;
+
+    public AdapterRecycler( ArrayList<Grocery> groceryArrayList, RecyclerViewInterface recyclerViewInterface){
+        this.recyclerViewInterface = recyclerViewInterface;
         this.groceryArrayList= groceryArrayList;
     }
     ArrayList<Grocery> groceryArrayList = new ArrayList<>();

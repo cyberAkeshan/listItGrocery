@@ -1,4 +1,4 @@
-package com.example.listitgrocery;
+package com.example.listitgrocery.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -9,16 +9,18 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 
+import com.example.listitgrocery.Adapter.AdapterRecycler;
+import com.example.listitgrocery.Adapter.RecyclerViewInterface;
+import com.example.listitgrocery.Grocery;
+import com.example.listitgrocery.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     private ArrayList<Grocery> gList;
     private RecyclerView recyclerView;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateLayout() {
-        AdapterRecycler adapter = new AdapterRecycler(gList);
+        AdapterRecycler adapter = new AdapterRecycler(recyclerViewInterface, gList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -75,4 +77,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(int position) {
+
+    }
 }
