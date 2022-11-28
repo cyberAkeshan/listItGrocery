@@ -8,22 +8,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.listitgrocery.Adapter.AdapterRecycler;
-import com.example.listitgrocery.Adapter.RecyclerViewInterface;
 import com.example.listitgrocery.Grocery;
 import com.example.listitgrocery.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements RecyclerViewInterface {
-
+public class MainActivity extends AppCompatActivity{
     private ArrayList<Grocery> gList;
     private RecyclerView recyclerView;
+    private AdapterRecycler.rClickListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     }
 
     private void updateLayout() {
-        AdapterRecycler adapter = new AdapterRecycler(recyclerViewInterface, gList);
+        onItemClick();
+        AdapterRecycler adapter = new AdapterRecycler(gList,listener);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -77,8 +78,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     }
 
 
-    @Override
-    public void onItemClick(int position) {
 
+    public void onItemClick() {
+        listener = (v, pos) -> {
+            Intent intent = new Intent(getApplicationContext(),GrocerylistActivity.class);
+            intent.putExtra("HEADER",gList.get(pos).getName());
+            startActivity(intent);
+        };
     }
 }

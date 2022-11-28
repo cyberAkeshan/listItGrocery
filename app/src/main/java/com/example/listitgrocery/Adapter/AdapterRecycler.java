@@ -14,10 +14,10 @@ import com.example.listitgrocery.R;
 import java.util.ArrayList;
 
 public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHolder> {
-    private final RecyclerViewInterface recyclerViewInterface;
 
-    public AdapterRecycler( ArrayList<Grocery> groceryArrayList, RecyclerViewInterface recyclerViewInterface){
-        this.recyclerViewInterface = recyclerViewInterface;
+    private rClickListener listener;
+    public AdapterRecycler( ArrayList<Grocery> groceryArrayList, rClickListener listener){
+        this.listener = listener;
         this.groceryArrayList= groceryArrayList;
     }
     ArrayList<Grocery> groceryArrayList = new ArrayList<>();
@@ -41,7 +41,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
         return groceryArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView title;
         public ViewHolder(View view) {
             super(view);
@@ -50,5 +50,13 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
         public TextView getTitle() {
             return title;
         }
+        @Override
+        public void onClick(View v) {
+            listener.onClick(v,getAdapterPosition());
+        }
+    }
+
+    public interface rClickListener{
+        void onClick(View v, int pos);
     }
 }

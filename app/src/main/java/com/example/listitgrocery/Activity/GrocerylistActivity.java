@@ -14,5 +14,8 @@ public class GrocerylistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocerylist);
         TextView header = findViewById(R.id.nameTextView);
+
+        String headerString = getIntent().getStringExtra("HEADER");
+        header.setText(headerString);
     }
 }
