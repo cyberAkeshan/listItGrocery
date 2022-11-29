@@ -35,6 +35,12 @@ public class MainActivity extends AppCompatActivity{
 
         recyclerView = findViewById(R.id.r);
         gList = new ArrayList<>();
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClick();
+            }
+        });
         addButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceType")
             @Override
@@ -65,12 +71,18 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void updateLayout() {
-        onItemClick();
+        //onItemClick();
+        listener = (v, pos) -> {
+            Intent intent = new Intent(getApplicationContext(),GrocerylistActivity.class);
+            intent.putExtra("HEADER",gList.get(pos).getName());
+            startActivity(intent);
+        };
         AdapterRecycler adapter = new AdapterRecycler(gList,listener);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+
     }
 
     private void setList(String text) {
@@ -80,10 +92,13 @@ public class MainActivity extends AppCompatActivity{
 
 
     public void onItemClick() {
-        listener = (v, pos) -> {
+
+
+
+        /*listener = (v, pos) -> {
             Intent intent = new Intent(getApplicationContext(),GrocerylistActivity.class);
             intent.putExtra("HEADER",gList.get(pos).getName());
             startActivity(intent);
-        };
+        };*/
     }
 }

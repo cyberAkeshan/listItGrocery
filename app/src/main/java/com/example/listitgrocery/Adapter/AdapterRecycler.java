@@ -16,18 +16,19 @@ import java.util.ArrayList;
 public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHolder> {
 
     private rClickListener listener;
+    ArrayList<Grocery> groceryArrayList;
+
     public AdapterRecycler( ArrayList<Grocery> groceryArrayList, rClickListener listener){
         this.listener = listener;
         this.groceryArrayList= groceryArrayList;
     }
-    ArrayList<Grocery> groceryArrayList = new ArrayList<>();
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.layout_recyclerlistview, viewGroup, false);
-
         return new ViewHolder(view);
     }
 
@@ -41,22 +42,27 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
         return groceryArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView title;
-        public ViewHolder(View view) {
-            super(view);
-            title = (TextView) view.findViewById(R.id.listname);
-        }
-        public TextView getTitle() {
-            return title;
-        }
-        @Override
-        public void onClick(View v) {
-            listener.onClick(v,getAdapterPosition());
-        }
-    }
 
     public interface rClickListener{
         void onClick(View v, int pos);
     }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView title;
+        public ViewHolder(View view) {
+            super(view);
+            title = (TextView) view.findViewById(R.id.listname);
+            title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onClick(view, getAdapterPosition());
+                }
+            });
+        }
+        public TextView getTitle() {
+            return title;
+        }
+    }
+
+
 }
