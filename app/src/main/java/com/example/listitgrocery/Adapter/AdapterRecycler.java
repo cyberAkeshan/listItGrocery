@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHolder> {
 
     private rClickListener listener;
-    ArrayList<Grocery> groceryArrayList;
+    private ArrayList<Grocery> groceryArrayList;
 
     public AdapterRecycler( ArrayList<Grocery> groceryArrayList, rClickListener listener){
         this.listener = listener;
@@ -27,8 +27,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.layout_recyclerlistview, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_recyclerlistview, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -41,7 +40,6 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
     public int getItemCount() {
         return groceryArrayList.size();
     }
-
 
     public interface rClickListener{
         void onClick(View v, int pos);

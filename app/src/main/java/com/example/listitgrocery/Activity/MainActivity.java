@@ -35,70 +35,52 @@ public class MainActivity extends AppCompatActivity{
 
         recyclerView = findViewById(R.id.r);
         gList = new ArrayList<>();
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onItemClick();
-            }
-        });
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceType")
-            @Override
-            public void onClick(View view) {
-                final EditText input = new EditText(MainActivity.this);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Neue Liste");
-                builder.setMessage("Name eingeben");
-                builder.setView(input);
-                builder.setPositiveButton("Erstellen", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        if(input.getText().toString().isEmpty()==false){
-                            setList(input.getText().toString());
-                            updateLayout();
-                        }
-                    }
-                });
-                builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // Do nothing.
-                    }
-                });
-                builder.show();
-            }
+
+        settingsButton.setOnClickListener(view -> {
+
+        });
+
+
+        addButton.setOnClickListener(view -> {
+            final EditText input = new EditText(MainActivity.this);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Neue Liste");
+            builder.setMessage("Name eingeben");
+            builder.setView(input);
+            builder.setPositiveButton("Erstellen", (dialog, whichButton) -> {
+                if(input.getText().toString().isEmpty()==false){
+                    setList(input.getText().toString());
+                    updateLayout();
+                }
+            });
+            builder.setNegativeButton("Abbrechen", (dialog, whichButton) -> {
+                // Do nothing.
+            });
+            builder.show();
         });
 
     }
 
     private void updateLayout() {
-        //onItemClick();
-        listener = (v, pos) -> {
-            Intent intent = new Intent(getApplicationContext(),GrocerylistActivity.class);
-            intent.putExtra("HEADER",gList.get(pos).getName());
-            startActivity(intent);
-        };
+        onItemClick();
         AdapterRecycler adapter = new AdapterRecycler(gList,listener);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-
     }
 
     private void setList(String text) {
             gList.add(new Grocery(text));
     }
 
-
-
     public void onItemClick() {
-
-
-
-        /*listener = (v, pos) -> {
+        listener = (v, pos) -> {
             Intent intent = new Intent(getApplicationContext(),GrocerylistActivity.class);
             intent.putExtra("HEADER",gList.get(pos).getName());
             startActivity(intent);
-        };*/
+        };
     }
 }
