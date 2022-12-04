@@ -1,14 +1,15 @@
 package com.example.listitgrocery;
 
-public class GroceryItem {
+public class GItem {
 
     private String ItemName;
 
-    GroceryItem(String Itemname) {
+    public GItem(String Itemname) {
         this.ItemName = Itemname;
     }
 
     public String getItemName() {
         return ItemName;
     }
+
 }

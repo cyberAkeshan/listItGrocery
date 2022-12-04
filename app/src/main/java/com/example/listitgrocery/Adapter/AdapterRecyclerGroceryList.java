@@ -13,12 +13,12 @@ import com.example.listitgrocery.R;
 
 import java.util.ArrayList;
 
-public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHolder> {
+public class AdapterRecyclerGroceryList extends RecyclerView.Adapter<AdapterRecyclerGroceryList.ViewHolder> {
 
-    private rClickListener listener;
+    private  rClickListener listener;
     private ArrayList<Grocery> groceryArrayList;
 
-    public AdapterRecycler( ArrayList<Grocery> groceryArrayList, rClickListener listener){
+    public AdapterRecyclerGroceryList(ArrayList<Grocery> groceryArrayList, rClickListener listener){
         this.listener = listener;
         this.groceryArrayList= groceryArrayList;
     }
@@ -27,12 +27,12 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_recyclerlistview, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_grocerylistrow, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterRecycler.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterRecyclerGroceryList.ViewHolder holder, int position) {
         holder.getTitle().setText(groceryArrayList.get(position).getName());
     }
 
@@ -50,12 +50,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
         public ViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.listname);
-            title.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onClick(view, getAdapterPosition());
-                }
-            });
+            title.setOnClickListener(view1 -> listener.onClick(view1, getAdapterPosition()));
         }
         public TextView getTitle() {
             return title;
