@@ -39,6 +39,8 @@ public class GrocerylistActivity extends AppCompatActivity {
         String headerString = getIntent().getStringExtra("HEADER");
         header.setText(headerString);
 
+        ArrayList<String> itemsFromMain = getIntent().getStringArrayListExtra("datalist");
+
         Button add = findViewById(R.id.button);
         recyclerView = findViewById(R.id.rItems);
 
@@ -60,9 +62,8 @@ public class GrocerylistActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
-
     private void setList(Editable text) {
-        iList.add(new GItem(text.toString()));
+        iList.add(new GItem(text.toString(),false));
         //Toast.makeText(GrocerylistActivity.this, s, Toast.LENGTH_SHORT).show();
     }
 }

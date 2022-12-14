@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private AdapterRecyclerGroceryList.rClickListener listener;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity{
         gList = new ArrayList<>();
 
         settingsButton.setOnClickListener(view -> {
-
         });
 
 
