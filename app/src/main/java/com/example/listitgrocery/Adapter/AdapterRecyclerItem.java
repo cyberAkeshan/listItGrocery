@@ -1,5 +1,6 @@
 package com.example.listitgrocery.Adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +30,10 @@ public class AdapterRecyclerItem extends RecyclerView.Adapter<AdapterRecyclerIte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterRecyclerItem.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterRecyclerItem.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.getItem().setText(itemArrayList.get(position).getItemName());
-        holder.getItem().setChecked(holder.getX());
+        holder.getItem().setOnCheckedChangeListener((compoundButton, b) -> itemArrayList.get(position).setChecked(b));
+        holder.getItem().setChecked(itemArrayList.get(position).isChecked());
     }
 
     @Override
@@ -41,25 +43,9 @@ public class AdapterRecyclerItem extends RecyclerView.Adapter<AdapterRecyclerIte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private CheckBox item;
-        private boolean x;
-        public boolean getX(){
-            return x;
-        }
         public ViewHolder(View view) {
             super(view);
             item = (CheckBox) view.findViewById(R.id.itemName);
-            item.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    x=b;
-                }
-            });
-            /*item.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onClick(view, getAdapterPosition());
-                }
-            });*/
         }
         public CheckBox getItem() {
             return item;
