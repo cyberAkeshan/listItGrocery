@@ -9,18 +9,27 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.listitgrocery.Adapter.AdapterRecyclerGroceryList;
 import com.example.listitgrocery.GItem;
 import com.example.listitgrocery.Grocery;
 import com.example.listitgrocery.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
+    FirebaseAuth auth;
+    FirebaseUser user;
+    Button logoutBtn;
+    TextView userTextView;
     private ArrayList<Grocery> gList;
     private RecyclerView recyclerView;
     private AdapterRecyclerGroceryList.rClickListener listener;
@@ -29,6 +38,27 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        auth = FirebaseAuth.getInstance();
+        user=auth.getCurrentUser();
+        logoutBtn=findViewById(R.id.logoutBtn);
+        userTextView=findViewById(R.id.userTextView);
+        if(user==null){
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            userTextView.setText(user.getEmail());
+        }
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         FloatingActionButton addButton = findViewById(R.id.floatingActionButton);
         FloatingActionButton settingsButton = findViewById(R.id.floatingActionButton2);
