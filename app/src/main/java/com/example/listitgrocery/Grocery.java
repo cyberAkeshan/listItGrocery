@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Grocery implements Serializable {
     private String name;
-    private ArrayList<GItem> items;
+    private ArrayList<GroceryItem> items;
 
     public Grocery(String name){
        this.name=name;
@@ -15,11 +15,11 @@ public class Grocery implements Serializable {
         return name;
     }
 
-   public ArrayList<GItem> getItems() {
+   public ArrayList<GroceryItem> getItems() {
         return items;
     }
 
-   public void setItems(ArrayList<GItem> items) {
+   public void setItems(ArrayList<GroceryItem> items) {
         this.items=items;
     }
 

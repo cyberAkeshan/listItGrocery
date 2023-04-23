@@ -11,15 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.listitgrocery.GItem;
+import com.example.listitgrocery.GroceryItem;
 import com.example.listitgrocery.Grocery;
 import com.example.listitgrocery.R;
 
 import java.util.ArrayList;
 
 public class AdapterRecyclerItem extends RecyclerView.Adapter<AdapterRecyclerItem.ViewHolder>{
-   private ArrayList<GItem> itemArrayList;
-    public AdapterRecyclerItem(ArrayList<GItem> itemArrayList){
+   private ArrayList<GroceryItem> itemArrayList;
+    public AdapterRecyclerItem(ArrayList<GroceryItem> itemArrayList){
         this.itemArrayList= itemArrayList;
     }
     @NonNull
