@@ -5,8 +5,9 @@ public class GroceryItem {
     private boolean isChecked;
     private final String itemName;
 
-    public GroceryItem(String itemName, boolean checked) {
-        this.isChecked =checked;
+    public GroceryItem(String itemName, boolean isChecked) {
+
+        this.isChecked = isChecked;
         this.itemName = itemName;
     }
 
