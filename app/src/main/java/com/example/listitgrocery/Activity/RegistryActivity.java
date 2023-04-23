@@ -29,8 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.ktx.Firebase;
 
 public class RegistryActivity extends AppCompatActivity {
-    AppCompatEditText editEmail;
-    MaterialTextView editPassword;
+    AppCompatEditText editEmail,editPassword,editPasswordConfirm;
     Button btnRegistry;
     FirebaseAuth mAuth;
     TextView anmelden;
@@ -52,9 +51,11 @@ public class RegistryActivity extends AppCompatActivity {
         setContentView(R.layout.layout_registry);
         mAuth= FirebaseAuth.getInstance();
         editEmail = findViewById(R.id.emailText2);
-        editPassword=findViewById(R.id.password2);
+        editPassword=findViewById(R.id.passwordText2);
+        editPasswordConfirm= findViewById(R.id.passwordText3);
         btnRegistry= findViewById(R.id.registryButton);
         anmelden = findViewById(R.id.loginAfterRegistry);
+
         anmelden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,9 +68,10 @@ public class RegistryActivity extends AppCompatActivity {
         btnRegistry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email, password;
+                String email, password, passwordConfirm;
                 email = String.valueOf(editEmail.getText());
                 password=String.valueOf(editPassword.getText());
+                passwordConfirm= String.valueOf(editPasswordConfirm.getText());
 
                 if(TextUtils.isEmpty(email)){
                     Toast.makeText(RegistryActivity.this,"Email angeben", Toast.LENGTH_SHORT).show();
@@ -79,24 +81,32 @@ public class RegistryActivity extends AppCompatActivity {
                     Toast.makeText(RegistryActivity.this,"Passwort angeben", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(RegistryActivity.this, "Registrierung erfolgreich.",
-                                            Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(RegistryActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
+                if(password.equals(passwordConfirm)){
+                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(RegistryActivity.this, "Registrierung erfolgreich.",
+                                       Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(RegistryActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
                             }
-                        });
+                        }
+                    });
+                }else{
+                    Toast.makeText(RegistryActivity.this,"Passwörter nicht gleich", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
             }
-        });
+        }
+
+        );
     }
 }

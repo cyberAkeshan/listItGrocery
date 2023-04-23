@@ -3,6 +3,7 @@ package com.example.listitgrocery.Activity;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,11 +16,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.example.listitgrocery.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
@@ -29,11 +33,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     AppCompatEditText editEmail;
-    MaterialTextView editPassword;
+    AppCompatEditText editPassword;
 
     Button btnLogin;
     FirebaseAuth mAuth;
     TextView registry;
+    TextView resetPassword;
     @Override
     public void onStart() {
         super.onStart();
@@ -53,9 +58,10 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth= FirebaseAuth.getInstance();
         editEmail = findViewById(R.id.emailText);
-        editPassword=findViewById(R.id.password);
+        editPassword=findViewById(R.id.passwordText);
         btnLogin= findViewById(R.id.loginButton);
         registry = findViewById(R.id.registry);
+        resetPassword=findViewById(R.id.forget);
         registry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,5 +107,41 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        resetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText resetMail = new EditText(view.getContext());
+                final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext());
+                passwordResetDialog.setTitle("Passwort zurücksetzen");
+                passwordResetDialog.setMessage("Email angeben zum Zurücksetzen des Passworts");
+                passwordResetDialog.setView(resetMail);
+                passwordResetDialog.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String mail = resetMail.getText().toString();
+                        mAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(LoginActivity.this, "Reset-Link wurde erfolgreich gesendet.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(LoginActivity.this, "Error! Zurücksetzen fehlgeschlagen",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+                passwordResetDialog.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+            passwordResetDialog.show();
+            }
+        });
     }
 }
