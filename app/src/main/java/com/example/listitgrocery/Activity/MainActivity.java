@@ -8,21 +8,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.listitgrocery.Adapter.AdapterRecyclerGroceryList;
-import com.example.listitgrocery.GItem;
 import com.example.listitgrocery.Grocery;
 import com.example.listitgrocery.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
@@ -30,9 +27,9 @@ public class MainActivity extends AppCompatActivity{
     FirebaseUser user;
     Button logoutBtn;
     TextView userTextView;
-    private ArrayList<Grocery> gList;
+    private ArrayList<Grocery> groceryArrayList;
     private RecyclerView recyclerView;
-    private AdapterRecyclerGroceryList.rClickListener listener;
+    private AdapterRecyclerGroceryList.rClickListener clickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +61,10 @@ public class MainActivity extends AppCompatActivity{
         FloatingActionButton settingsButton = findViewById(R.id.floatingActionButton2);
 
         recyclerView = findViewById(R.id.r);
-        gList = new ArrayList<>();
+        groceryArrayList = new ArrayList<>();
 
         settingsButton.setOnClickListener(view -> {
         });
-
 
         addButton.setOnClickListener(view -> {
             final EditText input = new EditText(MainActivity.this);
@@ -87,12 +83,11 @@ public class MainActivity extends AppCompatActivity{
             });
             builder.show();
         });
-
     }
 
     private void updateLayout() {
         onItemClick();
-        AdapterRecyclerGroceryList adapter = new AdapterRecyclerGroceryList(gList,listener);
+        AdapterRecyclerGroceryList adapter = new AdapterRecyclerGroceryList(groceryArrayList, clickListener);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -100,13 +95,13 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void setList(String text) {
-            gList.add(new Grocery(text));
+            groceryArrayList.add(new Grocery(text));
     }
 
     public void onItemClick() {
-        listener = (v, pos) -> {
+        clickListener = (v, pos) -> {
             Intent intent = new Intent(getApplicationContext(),GrocerylistActivity.class);
-            intent.putExtra("HEADER",gList.get(pos).getName());
+            intent.putExtra("HEADER", groceryArrayList.get(pos).getName());
             startActivity(intent);
         };
     }

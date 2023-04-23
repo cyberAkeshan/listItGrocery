@@ -19,14 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listitgrocery.Adapter.AdapterRecyclerGroceryList;
 import com.example.listitgrocery.Adapter.AdapterRecyclerItem;
-import com.example.listitgrocery.GItem;
+import com.example.listitgrocery.GroceryItem;
 import com.example.listitgrocery.Grocery;
 import com.example.listitgrocery.R;
 
 import java.util.ArrayList;
 
 public class GrocerylistActivity extends AppCompatActivity {
-    private ArrayList<GItem> iList;
+    private ArrayList<GroceryItem> iList;
     private RecyclerView recyclerView;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -63,7 +63,7 @@ public class GrocerylistActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
     private void setList(Editable text) {
-        iList.add(new GItem(text.toString(),false));
+        iList.add(new GroceryItem(text.toString(),false));
         //Toast.makeText(GrocerylistActivity.this, s, Toast.LENGTH_SHORT).show();
     }
 }
