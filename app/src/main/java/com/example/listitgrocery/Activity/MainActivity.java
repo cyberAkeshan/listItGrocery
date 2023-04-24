@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.listitgrocery.Adapter.AdapterRecyclerGroceryList;
 import com.example.listitgrocery.Grocery;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity{
         recyclerView = findViewById(R.id.r);
         groceryArrayList = new ArrayList<>();
 
+        ArrayList<String> names= new ArrayList<>();
+
         settingsButton.setOnClickListener(view -> {
         });
 
@@ -73,7 +76,12 @@ public class MainActivity extends AppCompatActivity{
             builder.setMessage("Name eingeben");
             builder.setView(input);
             builder.setPositiveButton("Erstellen", (dialog, whichButton) -> {
-                if(input.getText().toString().isEmpty()==false){
+                if(names.contains(input.getText().toString())){
+                    Toast.makeText(MainActivity.this, "Error! Name schon vorhanden!",
+                            Toast.LENGTH_SHORT).show();
+                }
+                if(input.getText().toString().isEmpty()==false&&!names.contains(input.getText().toString())){
+                    names.add(input.getText().toString());
                     setList(input.getText().toString());
                     updateLayout();
                 }

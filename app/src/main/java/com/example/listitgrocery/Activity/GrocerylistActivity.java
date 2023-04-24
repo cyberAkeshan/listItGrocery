@@ -5,6 +5,7 @@ import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +23,10 @@ import com.example.listitgrocery.Adapter.AdapterRecyclerItem;
 import com.example.listitgrocery.GroceryItem;
 import com.example.listitgrocery.Grocery;
 import com.example.listitgrocery.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class GrocerylistActivity extends AppCompatActivity {
@@ -31,6 +35,8 @@ public class GrocerylistActivity extends AppCompatActivity {
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Gson gson = new Gson();
+
         iList = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocerylist);
@@ -39,22 +45,28 @@ public class GrocerylistActivity extends AppCompatActivity {
         String headerString = getIntent().getStringExtra("HEADER");
         header.setText(headerString);
 
-        ArrayList<String> itemsFromMain = getIntent().getStringArrayListExtra("datalist");
-
         Button add = findViewById(R.id.button);
         recyclerView = findViewById(R.id.rItems);
 
-        EditText simpleEditText = (EditText) findViewById(R.id.editItemName);
+        EditText inputText = (EditText) findViewById(R.id.editItemName);
 
         add.setOnClickListener(view -> {
-            if(simpleEditText.getText().toString().isEmpty()==false){
-                setList(simpleEditText.getText());
+            if(!inputText.getText().toString().isEmpty()){
+                setList(inputText.getText());
                 updateLayout();
+
+                String json = gson.toJson(iList);
+                Log.d("CREATION",json);
+
             }
-            simpleEditText.setText("");
+            inputText.setText("");
         });
+
     }
 
+    //Type type = new TypeToken<ArrayList<GroceryItem>>(){}.getType();
+    //ArrayList<GroceryItem> testiList = gson.fromJson(json, type);
+    //Zurückparsen!!!!!!!!!!!!!
     private void updateLayout() {
         AdapterRecyclerItem adapter = new AdapterRecyclerItem(iList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
