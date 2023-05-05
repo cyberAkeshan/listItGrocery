@@ -1,3 +1,5 @@
+Disclaimer: Clean code refactoring only for the GItem --> GroceryItem.java class.
+
 First of all we decided to change the class name from “GItem” to “GroceryItem”. Normally it would be clear for us for what “GItem” stands for, but if we would work on the project after a long break again it could be having a speaking-name for the class.
 
 The next change was in line 4 (old code) changing the variable “checked” to “isChecked”. We thought that this would also be a better indicator for being a boolean variable.
