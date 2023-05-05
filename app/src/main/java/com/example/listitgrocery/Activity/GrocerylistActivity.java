@@ -35,7 +35,6 @@ public class GrocerylistActivity extends AppCompatActivity {
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        Gson gson = new Gson();
 
         iList = new ArrayList<>();
         super.onCreate(savedInstanceState);
@@ -48,20 +47,26 @@ public class GrocerylistActivity extends AppCompatActivity {
         Button add = findViewById(R.id.button);
         recyclerView = findViewById(R.id.rItems);
 
-        EditText inputText = (EditText) findViewById(R.id.editItemName);
+        EditText inputText = findViewById(R.id.editItemName);
 
         add.setOnClickListener(view -> {
             if(!inputText.getText().toString().isEmpty()){
                 setList(inputText.getText());
                 updateLayout();
-
-                String json = gson.toJson(iList);
-                Log.d("CREATION",json);
-
             }
             inputText.setText("");
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        Gson gson = new Gson();
+        String title = getIntent().getStringExtra("HEADER");
+        Grocery grocery = new Grocery(title);
+        grocery.setItems(iList);
+        String json = gson.toJson(grocery);
+        Log.d("CREATION",json);
+        super.onBackPressed();
     }
 
     //Type type = new TypeToken<ArrayList<GroceryItem>>(){}.getType();
