@@ -23,6 +23,8 @@ import com.example.listitgrocery.Adapter.AdapterRecyclerItem;
 import com.example.listitgrocery.GroceryItem;
 import com.example.listitgrocery.Grocery;
 import com.example.listitgrocery.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -30,19 +32,23 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class GrocerylistActivity extends AppCompatActivity {
+    private DatabaseReference mDatabase;
+// ...
     private ArrayList<GroceryItem> iList;
     private RecyclerView recyclerView;
+    String title;
+    String uid;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
+        uid=getIntent().getStringExtra("uid");
+        title = getIntent().getStringExtra("HEADER");
         iList = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocerylist);
         TextView header = findViewById(R.id.nameTextView);
-
-        String headerString = getIntent().getStringExtra("HEADER");
-        header.setText(headerString);
+        header.setText(title);
 
         Button add = findViewById(R.id.button);
         recyclerView = findViewById(R.id.rItems);
@@ -60,12 +66,15 @@ public class GrocerylistActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         Gson gson = new Gson();
-        String title = getIntent().getStringExtra("HEADER");
         Grocery grocery = new Grocery(title);
         grocery.setItems(iList);
         String json = gson.toJson(grocery);
         Log.d("CREATION",json);
+        mDatabase.child("users").child(uid).child(title).setValue(grocery);
+        mDatabase.child("users").child(uid).child("b").removeValue();
+
         super.onBackPressed();
     }
 

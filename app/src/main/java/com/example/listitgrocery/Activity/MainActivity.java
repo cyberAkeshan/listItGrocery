@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity{
         clickListener = (v, pos) -> {
             Intent intent = new Intent(getApplicationContext(),GrocerylistActivity.class);
             intent.putExtra("HEADER", groceryArrayList.get(pos).getName());
+            intent.putExtra("uid",user.getUid());
             startActivity(intent);
         };
     }
