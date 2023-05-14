@@ -20,10 +20,13 @@ import com.example.listitgrocery.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
+    private DatabaseReference mDatabase;
     FirebaseAuth auth;
     FirebaseUser user;
     Button logoutBtn;
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
         logoutBtn=findViewById(R.id.logoutBtn);
@@ -48,20 +51,20 @@ public class MainActivity extends AppCompatActivity{
         }else{
             userTextView.setText(user.getEmail());
         }
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        logoutBtn.setOnClickListener(view -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(intent);
+            finish();
         });
 
         FloatingActionButton addButton = findViewById(R.id.floatingActionButton);
         FloatingActionButton settingsButton = findViewById(R.id.floatingActionButton2);
 
         recyclerView = findViewById(R.id.r);
+
+
+
         groceryArrayList = new ArrayList<>();
 
         ArrayList<String> names= new ArrayList<>();
