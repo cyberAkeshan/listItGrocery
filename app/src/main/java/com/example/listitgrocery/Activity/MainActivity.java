@@ -16,17 +16,21 @@ import android.widget.Toast;
 
 import com.example.listitgrocery.Adapter.AdapterRecyclerGroceryList;
 import com.example.listitgrocery.Grocery;
+import com.example.listitgrocery.GroceryItem;
 import com.example.listitgrocery.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
-    private DatabaseReference mDatabase;
+    DatabaseReference mDatabase;
     FirebaseAuth auth;
     FirebaseUser user;
     Button logoutBtn;
@@ -64,9 +68,36 @@ public class MainActivity extends AppCompatActivity{
         recyclerView = findViewById(R.id.r);
 
 
+        if(mDatabase.child("users").child(user.getUid()).getKey()==user.getUid()){
+            DatabaseReference listRef= mDatabase.child("users").child(user.getUid());
+            listRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
 
-        groceryArrayList = new ArrayList<>();
+                        ArrayList<Grocery> groceries = new ArrayList<>();
+                        DataSnapshot itemsSnapshot = dataSnapshot;
+                        for (DataSnapshot itemSnapshot : itemsSnapshot.getChildren()) {
+                            String listName = itemSnapshot.getKey();
+                            Grocery grocery = new Grocery(listName);
+                            groceries.add(grocery);
+                        }
+                        groceryArrayList=groceries;
+                        updateLayout();
+                        System.out.println("Items: " + groceries);
+                    } else {
+                        System.out.println("Liste not found in the database.");
+                    }
+                }
 
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("Error reading list data from database: " + databaseError.getMessage());
+                }
+            });
+        }else{
+            groceryArrayList = new ArrayList<>();
+        }
         ArrayList<String> names= new ArrayList<>();
 
         settingsButton.setOnClickListener(view -> {
@@ -86,6 +117,7 @@ public class MainActivity extends AppCompatActivity{
                 if(input.getText().toString().isEmpty()==false&&!names.contains(input.getText().toString())){
                     names.add(input.getText().toString());
                     setList(input.getText().toString());
+                    save(input.getText().toString());
                     updateLayout();
                 }
             });
@@ -96,6 +128,11 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    private void save(String listName){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        Grocery grocery = new Grocery(listName);
+        mDatabase.child("users").child(user.getUid()).child(listName).setValue(grocery);
+    }
     private void updateLayout() {
         onItemClick();
         AdapterRecyclerGroceryList adapter = new AdapterRecyclerGroceryList(groceryArrayList, clickListener);

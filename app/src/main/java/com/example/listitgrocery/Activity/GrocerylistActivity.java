@@ -1,6 +1,7 @@
 package com.example.listitgrocery.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.text.Editable;
@@ -103,7 +104,7 @@ public class GrocerylistActivity extends AppCompatActivity {
             inputText.setText("");
         });
     }
-    public void save(){
+    private void save(){
         mDatabase = FirebaseDatabase.getInstance().getReference();
         Gson gson = new Gson();
         Grocery grocery = new Grocery(title);
@@ -116,7 +117,8 @@ public class GrocerylistActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         save();
-        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
     }
 
     private void updateLayout() {
