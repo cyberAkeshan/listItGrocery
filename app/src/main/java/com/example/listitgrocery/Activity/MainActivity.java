@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity{
         auth = FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
         logoutBtn=findViewById(R.id.logoutBtn);
-        userTextView=findViewById(R.id.userTextView);
+        userTextView=findViewById(R.id.userTextview);
         if(user==null){
             Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
             startActivity(intent);
