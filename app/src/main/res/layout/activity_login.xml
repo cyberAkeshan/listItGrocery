@@ -35,8 +35,11 @@
             android:background="#FFFFFF"
             android:ems="10"
             android:inputType="textPassword"
-            tools:layout_editor_absoluteX="80dp"
-            tools:layout_editor_absoluteY="321dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailText"
+            app:layout_constraintVertical_bias="0.099" />
 
         <TextView
             android:id="@+id/password"
@@ -58,8 +61,12 @@
             android:backgroundTint="#FFFFFF"
             android:ems="10"
             android:inputType="textEmailAddress"
-            tools:layout_editor_absoluteX="80dp"
-            tools:layout_editor_absoluteY="234dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.374" />
 
         <Button
             android:id="@+id/loginButton"
