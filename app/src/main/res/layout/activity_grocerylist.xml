@@ -8,7 +8,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="375dp"
         android:layout_height="75dp"
-        android:background="#BEE1D5"
+        android:backgroundTint="#BEE1D5"
+        android:background="@drawable/layout_edges"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
@@ -60,8 +62,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="375dp"
         android:layout_height="608dp"
-        android:background="#000000"
         android:backgroundTint="#BEC5E7"
+        android:background="@drawable/layout_edges"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"
@@ -123,7 +125,8 @@
             android:id="@+id/constraintLayout2"
             android:layout_width="344dp"
             android:layout_height="95dp"
-            android:background="#BFE2D6"
+            android:backgroundTint="#BFE2D6"
+            android:background="@drawable/layout_edges"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.491"
