@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity{
     DatabaseReference mDatabase;
@@ -35,7 +36,11 @@ public class MainActivity extends AppCompatActivity{
     FirebaseUser user;
     Button logoutBtn;
     TextView userTextView;
+    private boolean forList=false;
     private ArrayList<Grocery> groceryArrayList;
+    private ArrayList<Grocery> copyArrayList;
+
+
     private RecyclerView recyclerView;
     private AdapterRecyclerGroceryList.rClickListener clickListener;
 
@@ -68,7 +73,7 @@ public class MainActivity extends AppCompatActivity{
         recyclerView = findViewById(R.id.r);
 
 
-        if(mDatabase.child("users").child(user.getUid()).getKey()==user.getUid()){
+        if(Objects.equals(mDatabase.child("users").child(user.getUid()).getKey(), user.getUid())){
             DatabaseReference listRef= mDatabase.child("users").child(user.getUid());
             listRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -83,6 +88,8 @@ public class MainActivity extends AppCompatActivity{
                             groceries.add(grocery);
                         }
                         groceryArrayList=groceries;
+                        copyArrayList=groceryArrayList;
+                        forList=true;
                         updateLayout();
                         System.out.println("Items: " + groceries);
                     } else {
@@ -114,9 +121,14 @@ public class MainActivity extends AppCompatActivity{
                     Toast.makeText(MainActivity.this, "Error! Name schon vorhanden!",
                             Toast.LENGTH_SHORT).show();
                 }
-                if(input.getText().toString().isEmpty()==false&&!names.contains(input.getText().toString())){
+                if(!input.getText().toString().isEmpty() &&!names.contains(input.getText().toString())){
                     names.add(input.getText().toString());
-                    setList(input.getText().toString());
+                    Grocery newListName = new Grocery(input.getText().toString());
+                    if(forList==true){
+                        groceryArrayList=copyArrayList;
+                    }else{
+                        groceryArrayList=new ArrayList<>();
+                    }groceryArrayList.add(newListName);
                     save(input.getText().toString());
                     updateLayout();
                 }
