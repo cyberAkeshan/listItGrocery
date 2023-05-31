@@ -2,13 +2,24 @@ package com.example.listitgrocery;
 
 public class GroceryItem {
 
-    private String ItemName;
+    private boolean isChecked;
+    private final String itemName;
 
-    GroceryItem(String Itemname) {
-        this.ItemName = Itemname;
+    public GroceryItem(String itemName, boolean isChecked) {
+
+        this.isChecked = isChecked;
+        this.itemName = itemName;
     }
 
     public String getItemName() {
-        return ItemName;
+        return itemName;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean isChecked) {
+        this.isChecked = isChecked;
     }
 }

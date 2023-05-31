@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "856034615968",
+    "project_id": "listitgrocery",
+    "storage_bucket": "listitgrocery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856034615968:android:68fb76dd7c64acd2fbdfc5",
+        "android_client_info": {
+          "package_name": "com.example.listitgrocery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856034615968-pbp44ketpdoa1d5lqgo3ep0a6gu5vnng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1UTmgDJwefyoG7JQIq6ZNX2Jx-_rikjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856034615968-pbp44ketpdoa1d5lqgo3ep0a6gu5vnng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

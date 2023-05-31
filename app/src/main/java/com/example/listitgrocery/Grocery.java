@@ -1,7 +1,13 @@
 package com.example.listitgrocery;
 
-public class Grocery {
-   public Grocery(String name){
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Grocery implements Serializable {
+    private String name;
+    private ArrayList<GroceryItem> items;
+
+    public Grocery(String name){
        this.name=name;
    }
 
@@ -9,10 +15,12 @@ public class Grocery {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+   public ArrayList<GroceryItem> getItems() {
+        return items;
     }
 
-    private String name;
+   public void setItems(ArrayList<GroceryItem> items) {
+        this.items=items;
+    }
 
 }
