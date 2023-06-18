@@ -120,6 +120,10 @@ public class GrocerylistActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);
     }
+    protected void onDestroy() {
+        save();
+        super.onDestroy();
+    }
 
     private void updateLayout() {
         AdapterRecyclerItem adapter = new AdapterRecyclerItem(iList);
